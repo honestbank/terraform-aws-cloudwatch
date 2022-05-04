@@ -9,7 +9,7 @@ env:
   AWS_SECRET_KEY: ${{ secrets.TERRATEST_AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ${{ secrets.TERRATEST_AWS_REGION }}
   AWS_REGION: ${{ secrets.TERRATEST_AWS_REGION }}
-  WEBHOOK_URL: ${{ secrets.PAGER_DUTY_TEST_CLOUDWATCH_URL }}
+  PAGERDUTY_TOKEN: ${{ secrets.PAGERDUTY_TOKEN }}
 jobs:
   terratest:
     name: terratest

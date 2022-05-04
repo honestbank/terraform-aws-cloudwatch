@@ -2,7 +2,7 @@ module "alarms" {
   source           = "./ec2-static-alarms"
   sns_topic_name   = "terratest-ec2-static-alarms-${random_string.test_instance.result}_1"
   sns_display_name = "terratest EC2 static alarms ${random_string.test_instance.result}_1"
-  https_webhooks   = var.https_webhooks
+  https_webhooks   = [pagerduty_service_integration.cloudwatch.html_url]
   ec2_id           = aws_instance.test_ec2_1.id
   alarms = {
     "example-alarm" : {
@@ -13,6 +13,9 @@ module "alarms" {
       evaluation_period   = "1"
     }
   }
+  depends_on = [
+    time_sleep.wait_service_integration
+  ]
 }
 
 resource "random_string" "test_instance" {
@@ -26,3 +29,8 @@ locals {
   test_display_name = "terratest-ec2-static-alarms-${random_string.test_instance.result}"
 }
 
+resource "time_sleep" "wait_service_integration" {
+  depends_on = [pagerduty_service_integration.cloudwatch]
+
+  create_duration = "2m"
+}
