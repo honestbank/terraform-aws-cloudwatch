@@ -8,9 +8,9 @@ resource "aws_sns_topic" "notifications" {
 }
 
 resource "aws_sns_topic_subscription" "subscription" {
-  for_each               = toset(var.https_webhooks)
+  count                  = length(var.https_webhooks)
   topic_arn              = aws_sns_topic.notifications.arn
   protocol               = "https"
-  endpoint               = each.value
+  endpoint               = var.https_webhooks[count.index]
   endpoint_auto_confirms = true
 }
