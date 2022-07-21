@@ -21,7 +21,7 @@ module "alarms" {
 resource "random_string" "test_instance" {
   length  = 8
   upper   = false
-  number  = true
+  numeric = true
   special = false
 }
 
